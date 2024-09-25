@@ -1,0 +1,10 @@
+{
+    "name": "yatsukhnenko/ext-yaler",
+    "type": "php-ext",
+    "require": {
+        "php": ">= 7.4.0"
+    },
+    "php-ext": {
+        "extension-name": "yaler"
+    }
+}
