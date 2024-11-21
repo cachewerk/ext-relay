@@ -42,8 +42,7 @@ AC_DEFUN([SET_DOWNLOAD_URL], [
             OS=el$VERSION
             ;;
           *)
-            # AC_MSG_ERROR([unsupported OS])
-            OS=unknown
+            AC_MSG_ERROR([unsupported OS $ID])
             ;;
         esac
       ], [
@@ -61,11 +60,9 @@ AC_DEFUN([SET_DOWNLOAD_URL], [
   PLATFORM=$(echo $host_cpu | $SED 's/_/-/')
   VERSION=$(php-config --version | cut -d . -f -2)
 
-  yaler_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
-  PHP_SUBST(yaler_DOWNLOAD_URL)
+  eval ${PHP_PECL_EXTENSION}_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
+  PHP_SUBST(${PHP_PECL_EXTENSION}_DOWNLOAD_URL)
 ])dnl
-
-SET_DOWNLOAD_URL([0.8.1])
 
 dnl tools
 AC_PATH_PROG([TAR], [tar])
@@ -79,5 +76,6 @@ if ! test -x $CURL; then
 fi
 
 PHP_NEW_EXTENSION([yaler])
+SET_DOWNLOAD_URL([0.9.0])
 PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION)_BINARY_RELEASE"
 PHP_ADD_MAKEFILE_FRAGMENT([Makefile.frag])

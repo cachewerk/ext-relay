@@ -1,9 +1,13 @@
-$(PHP_PECL_EXTENSION)_ARTIFACT = $(notdir $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL))
+$(PHP_PECL_EXTENSION)_TMPDIR := $(shell mktemp --directory)
+$(PHP_PECL_EXTENSION)_ARTIFACT := $(notdir $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL))
 
 $(PHP_PECL_EXTENSION)_BINARY_RELEASE: $($(PHP_PECL_EXTENSION)_ARTIFACT)
-	echo "$(shell curl -fsL $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL).sha256) $<" | sha256sum --check
-	tar -xf $($(PHP_PECL_EXTENSION)_ARTIFACT) --strip-components=1 -C $(phplibdir) $(PHP_PECL_EXTENSION).$(SHLIB_SUFFIX_NAME)
+	echo "$(shell curl -fsL $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL).sha256) $($(PHP_PECL_EXTENSION)_TMPDIR)/$<" | sha256sum --check
+	@tar -xf $($(PHP_PECL_EXTENSION)_TMPDIR)/$< --strip-components=1 -C $($(PHP_PECL_EXTENSION)_TMPDIR)
+	@cp $($(PHP_PECL_EXTENSION)_TMPDIR)/$(PHP_PECL_EXTENSION).$(SHLIB_SUFFIX_NAME) $(phplibdir)
+	echo cp $($(PHP_PECL_EXTENSION)_TMPDIR)/$(PHP_PECL_EXTENSION).ini $(shell php-config --ini-dir)
+	@rm -fr $($(PHP_PECL_EXTENSION)_TMPDIR)
 
 $($(PHP_PECL_EXTENSION)_ARTIFACT):
-	curl -fsL $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL) -o $@
+	curl -fsL $($(PHP_PECL_EXTENSION)_DOWNLOAD_URL) -o $($(PHP_PECL_EXTENSION)_TMPDIR)/$@
 
