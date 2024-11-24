@@ -58,10 +58,10 @@ AC_DEFUN([SET_DOWNLOAD_URL], [
   esac
 
   PLATFORM=$(echo $host_cpu | $SED 's/_/-/')
-  VERSION=$(php-config --version | cut -d . -f -2)
-
-  eval ${PHP_PECL_EXTENSION}_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
-  PHP_SUBST(${PHP_PECL_EXTENSION}_DOWNLOAD_URL)
+  VERSION=$($PHP_CONFIG --version | cut -d . -f -2)
+  export ${PHP_PECL_EXTENSION}_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
+  PHP_SUBST([${PHP_PECL_EXTENSION}_DOWNLOAD_URL])
+  PHP_SUBST([PHP_CONFIG])
 ])dnl
 
 dnl tools
