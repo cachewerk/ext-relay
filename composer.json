@@ -1,14 +1,14 @@
 {
-    "name": "yatsukhnenko/ext-yaler",
+    "name": "cachewerk/ext-relay",
     "type": "php-ext",
     "require": {
         "ext-igbinary": "*",
         "ext-json": "*",
         "ext-msgpack": "*",
-        "php": ">=7.4.0,<8.5"
+        "php": "^7.4|^8.0"
     },
     "php-ext": {
-        "extension-name": "yaler",
+        "extension-name": "relay",
         "support-zts": false
     }
 }
