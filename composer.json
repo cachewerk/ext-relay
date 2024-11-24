@@ -1,6 +1,8 @@
 {
     "name": "cachewerk/ext-relay",
+    "description": "The next-generation caching layer for PHP.",
     "type": "php-ext",
+    "license": "MIT",
     "require": {
         "ext-igbinary": "*",
         "ext-json": "*",
