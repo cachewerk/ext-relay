@@ -42,11 +42,11 @@ AC_DEFUN([SET_DOWNLOAD_URL], [
             OS=el$VERSION
             ;;
           *)
-            AC_MSG_ERROR([unsupported OS $ID])
+            AC_MSG_ERROR([unsupported OS $ID, please report on GitHub])
             ;;
         esac
       ], [
-        AC_MSG_ERROR([failed to determine OS])
+        AC_MSG_ERROR([failed to determine OS, please report on GitHub])
       ])
       ;;
     darwin*)
