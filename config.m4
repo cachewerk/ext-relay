@@ -1,4 +1,4 @@
-dnl There is a small macOS fix that was committed after v1.1.0.
+dnl macOS requires hiredis v1.2.0
 AC_CANONICAL_HOST
 case "$host_os" in
   darwin*)
@@ -75,7 +75,7 @@ if ! test -x $CURL; then
   AC_MSG_ERROR([curl required])
 fi
 
-PHP_NEW_EXTENSION([yaler])
+PHP_NEW_EXTENSION([relay])
 SET_DOWNLOAD_URL([0.9.0])
 PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION)_BINARY_RELEASE"
 PHP_ADD_MAKEFILE_FRAGMENT([Makefile.frag])
