@@ -2,9 +2,13 @@
     "name": "yatsukhnenko/ext-yaler",
     "type": "php-ext",
     "require": {
-        "php": ">= 7.4.0"
+        "ext-igbinary": "*",
+        "ext-json": "*",
+        "ext-msgpack": "*",
+        "php": ">=7.4.0,<8.5"
     },
     "php-ext": {
-        "extension-name": "yaler"
+        "extension-name": "yaler",
+        "support-zts": false
     }
 }
