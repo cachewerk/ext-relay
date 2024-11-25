@@ -22,7 +22,7 @@ dnl libck
 PKG_CHECK_MODULES([CK], [ck >= 0.7.0])
 
 dnl download url
-AC_DEFUN([SET_DOWNLOAD_URL], [
+AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
   AC_REQUIRE([AC_CANONICAL_HOST])dnl
   AC_REQUIRE([AC_PROG_EGREP])dnl
   AC_REQUIRE([AC_PROG_SED])dnl
@@ -59,8 +59,8 @@ AC_DEFUN([SET_DOWNLOAD_URL], [
 
   PLATFORM=$(echo $host_cpu | $SED 's/_/-/')
   VERSION=$($PHP_CONFIG --version | cut -d . -f -2)
-  export ${PHP_PECL_EXTENSION}_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
-  PHP_SUBST([${PHP_PECL_EXTENSION}_DOWNLOAD_URL])
+  RELAY_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
+  PHP_SUBST([RELAY_DOWNLOAD_URL])
   PHP_SUBST([PHP_CONFIG])
 ])dnl
 
@@ -76,6 +76,6 @@ if ! test -x $CURL; then
 fi
 
 PHP_NEW_EXTENSION([relay])
-SET_DOWNLOAD_URL([0.9.0])
-PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION)_BINARY_RELEASE"
+RELAY_SET_DOWNLOAD_URL([0.9.0])
+PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION).\$(SHLIB_SUFFIX_NAME)"
 PHP_ADD_MAKEFILE_FRAGMENT([Makefile.frag])
