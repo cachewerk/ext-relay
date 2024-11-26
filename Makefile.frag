@@ -1,11 +1,11 @@
 RELAY_TMPDIR := $(shell mktemp --directory)
 RELAY_ARTIFACT := $(notdir $(RELAY_DOWNLOAD_URL))
 
-$(PHP_PECL_EXTENSION).$(SHLIB_SUFFIX_NAME): $(RELAY_ARTIFACT)
-	echo "$(shell curl -fsL $(RELAY_DOWNLOAD_URL).sha256) $(RELAY_TMPDIR)/$<" | sha256sum --check
+$(PHP_PECL_EXTENSION): $(RELAY_ARTIFACT)
+	echo "$(shell curl -fsL $(RELAY_DOWNLOAD_URL).sha256)  $(RELAY_TMPDIR)/$<" | shasum -a 256 --check
 	@tar -xf $(RELAY_TMPDIR)/$< --strip-components=1 -C $(RELAY_TMPDIR)
-	@cp $(RELAY_TMPDIR)/$@ $(phplibdir)
-	#@cp $(RELAY_TMPDIR)/$(PHP_PECL_EXTENSION).ini $(shell $(PHP_CONFIG) --ini-dir)
+	@LC_ALL=C $(SED) -iE "s/00000000-0000-0000-0000-000000000000/$(shell uuidgen)/" $(RELAY_TMPDIR)/$@.so
+	@cp $(RELAY_TMPDIR)/$@.so $(phplibdir)
 	@rm -fr $(RELAY_TMPDIR)
 
 $(RELAY_ARTIFACT):
