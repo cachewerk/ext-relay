@@ -1,0 +1,51 @@
+name: Bump stable tag
+
+on:
+  repository_dispatch:
+    types:
+      - bump-relay-stable
+
+jobs:
+
+  bump-relay-stable:
+
+    name: Bump stable tag
+    runs-on: ubuntu-latest
+
+    if: github.event.action == 'bump-relay-stable'
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update formula
+        env:
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+        run: |
+          echo "Updating stable tag to $TAG_NAME"
+          sed -i "s/RELAY_SET_DOWNLOAD_URL(\[[0-9.]+\])/RELAY_SET_DOWNLOAD_URL([$TAG_NAME])/"
+
+      - name: Commit changes
+        env:
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+        run: |
+          BRANCH=pr/stable-$TAG_NAME
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Pushing changes to $BRANCH branch"
+          git checkout -b $BRANCH
+          git add Formula/*.rb
+          git commit -m "Bump stable to $TAG_NAME"
+          git push -u origin $BRANCH
+
+      - name: Open pull request
+        uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          route: POST /repos/cachewerk/homebrew-tap/pulls
+          base: main
+          head: pr/stable-${{ github.event.client_payload.tag }}
+          title: Relay ${{ github.event.client_payload.tag }}
+          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}
