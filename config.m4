@@ -41,6 +41,9 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
           centos|rocky)
             OS=el$VERSION
             ;;
+          ubuntu)
+            OS=debian
+            ;;
           *)
             AC_MSG_ERROR([unsupported OS $ID, please report on GitHub])
             ;;
