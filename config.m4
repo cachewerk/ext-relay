@@ -41,6 +41,9 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
           centos|rocky)
             OS=el$VERSION
             ;;
+          fedora)
+            OS=el9
+            ;;
           ubuntu)
             OS=debian
             ;;
@@ -68,17 +71,18 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
 ])dnl
 
 dnl tools
-AC_PATH_PROG([TAR], [tar])
-if ! test -x $TAR; then
-  AC_MSG_ERROR([tar required])
-fi
-
-AC_PATH_PROG([CURL], [curl])
-if ! test -x $CURL; then
-  AC_MSG_ERROR([curl required])
-fi
+AC_DEFUN([RELAY_CHECK_PROGS], [
+  m4_foreach([prog], $@, [
+    AC_PATH_PROG([prog], [prog])
+    if test ! -x "$prog"; then
+      AC_MSG_ERROR([prog required])
+    fi
+    unset ac_cv_path_prog
+  ])dnl
+])dnl
 
 PHP_NEW_EXTENSION([relay])
 RELAY_SET_DOWNLOAD_URL([0.9.1])
+RELAY_CHECK_PROGS([curl, shasum, tar, uuidgen])
 PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION)"
 PHP_ADD_MAKEFILE_FRAGMENT([Makefile.frag])
