@@ -65,10 +65,14 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
 
   VERSION=$($PHP_CONFIG --version | cut -d . -f -2)
   PLATFORM=$(echo $host_cpu | $SED 's/aarch64/arm64/;s/x86_64/x86-64/')
-  LIBSSL_VERSION=$($PKG_CONFIG --print-provides libssl | $SED 's/libssl = //' | cut -d . -f -1)
-  if test "$LIBSSL_VERSION" = "3"; then
-    PLATFORM="$PLATFORM+libssl3"
+
+  if test "$OS" = "debian"; then
+    LIBSSL_VERSION=$($PKG_CONFIG --print-provides libssl | $SED 's/libssl = //' | cut -d . -f -1)
+    if test "$LIBSSL_VERSION" = "3"; then
+      PLATFORM="$PLATFORM+libssl3"
+    fi
   fi
+
   RELAY_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
   PHP_SUBST([RELAY_DOWNLOAD_URL])
   PHP_SUBST([PHP_CONFIG])
