@@ -33,7 +33,7 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
       AC_CHECK_FILE([/etc/os-release], [
         AC_MSG_NOTICE([Extracting OS and version from /etc/os-release])
         VERSION=$($EGREP '^VERSION_ID=' /etc/os-release | $SED 's/VERSION_ID=//')
-        ID=$($EGREP '^ID=' /etc/os-release | $SED 's/ID=//' | cut -d . -f -1)
+        ID=$($EGREP '^ID=' /etc/os-release | $SED 's/ID=//;s/"//g' | cut -d . -f -1)
         case $ID in
           alpine|debian)
             OS=$ID
@@ -41,7 +41,7 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
           centos|rocky)
             OS=el$VERSION
             ;;
-          fedora)
+          fedora|sles|opensuse*)
             OS=el9
             ;;
           ubuntu)
