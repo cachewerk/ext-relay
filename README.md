@@ -7,11 +7,11 @@ Relay does **NOT** support Windows.
 ## Installation
 
 ```
-pie install cachewerk/relay
+pie install cachewerk/ext-relay
 ```
 
 Or install Relay for a specific PHP version: 
 
 ```
-pie install --with-php-config=/usr/bin/php-config7.4 cachewerk/relay
+pie install --with-php-config=/usr/bin/php-config7.4 cachewerk/ext-relay
 ```

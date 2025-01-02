@@ -12,6 +12,7 @@
     "php-ext": {
         "extension-name": "relay",
         "support-zts": false,
-        "os-families-exclude": ["windows"]
+        "os-families-exclude": ["windows"],
+        "priority": 70
     }
 }
