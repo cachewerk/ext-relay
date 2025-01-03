@@ -4,13 +4,14 @@
     "type": "php-ext",
     "license": "MIT",
     "require": {
-        "ext-igbinary": "*",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "ext-msgpack": "*",
-        "php": "^7.4|^8.0"
+        "ext-igbinary": "*"
     },
     "php-ext": {
         "extension-name": "relay",
+        "priority": 70,
         "support-zts": false,
         "os-families-exclude": ["windows"]
     }
