@@ -89,6 +89,12 @@ AC_DEFUN([RELAY_CHECK_PROGS], [
   ])dnl
 ])dnl
 
+dnl priority
+AC_CHECK_FILE([composer.json], [
+  RELAY_PRIORITY=$($EGREP priority composer.json | $SED 's/"priority"://' | cut -d , -f -1)
+])
+PHP_SUBST([RELAY_PRIORITY])
+
 PHP_NEW_EXTENSION([relay])
 RELAY_SET_DOWNLOAD_URL([0.9.1])
 RELAY_CHECK_PROGS([curl, shasum, tar, uuidgen])
