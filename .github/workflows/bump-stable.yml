@@ -4,11 +4,6 @@ on:
   repository_dispatch:
     types:
       - bump-relay-stable
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag'
-        required: true
 
 jobs:
 
@@ -24,12 +19,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Update formula
+      - name: Update config
         env:
           TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
           echo "Updating stable tag to $TAG_NAME"
-          sed -i "s/RELAY_SET_DOWNLOAD_URL(\[[0-9.]+\])/RELAY_SET_DOWNLOAD_URL([$TAG_NAME])/"
+          sed -i "s/RELAY_SET_DOWNLOAD_URL(\[[0-9.]+\])/RELAY_SET_DOWNLOAD_URL([$TAG_NAME])/" config.m4
 
       - name: Commit changes
         env:
