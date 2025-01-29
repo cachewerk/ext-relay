@@ -24,7 +24,8 @@ jobs:
           TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
           echo "Updating stable tag to $TAG_NAME"
-          sed -i "s/RELAY_SET_DOWNLOAD_URL(\[[0-9.]+\])/RELAY_SET_DOWNLOAD_URL([$TAG_NAME])/" config.m4
+          VERSION="${TAG_NAME#v}"
+          sed -i -E "s/RELAY_SET_DOWNLOAD_URL\(\[[0-9.]+\]\)/RELAY_SET_DOWNLOAD_URL([$VERSION])/" config.m4
 
       - name: Commit changes
         env:
