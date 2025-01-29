@@ -4,6 +4,11 @@ on:
   repository_dispatch:
     types:
       - bump-relay-stable
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag'
+        required: true
 
 jobs:
 
