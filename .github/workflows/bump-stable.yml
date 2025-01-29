@@ -45,7 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          route: POST /repos/cachewerk/homebrew-tap/pulls
+          route: POST /repos/cachewerk/ext-relay/pulls
           base: main
           head: pr/stable-${{ github.event.client_payload.tag }}
           title: Relay ${{ github.event.client_payload.tag }}
