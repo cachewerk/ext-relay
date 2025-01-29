@@ -35,7 +35,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "Pushing changes to $BRANCH branch"
           git checkout -b $BRANCH
-          git add Formula/*.rb
+          git add config.m4
           git commit -m "Bump stable to $TAG_NAME"
           git push -u origin $BRANCH
 
