@@ -98,6 +98,7 @@ AC_CHECK_FILE([composer.json], [
   RELAY_PRIORITY=$($EGREP priority composer.json | $SED 's/"priority"://' | cut -d , -f -1)
 ])
 PHP_SUBST([RELAY_PRIORITY])
+PHP_SUBST([PHP_THREAD_SAFETY])
 PHP_SUBST([PHP_CONFIG])
 
 PHP_NEW_EXTENSION([relay])
