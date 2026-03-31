@@ -63,4 +63,4 @@ jobs:
           base: main
           head: pr/stable-${{ github.event.client_payload.tag }}
           title: Relay ${{ github.event.client_payload.tag }}
-          body: "See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}\n\nDraft release: ${{ steps.create_release.outputs.url }}"
+          body: "🚀 **Merge this PR, then publish the draft release.**\n\n📦 Draft release: ${{ steps.create_release.outputs.url }}"
