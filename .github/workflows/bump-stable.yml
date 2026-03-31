@@ -51,7 +51,7 @@ jobs:
             --title "$TAG_NAME" \
             --target main \
             --draft \
-            --notes "")
+            --notes "https://github.com/cachewerk/relay/releases/tag/$TAG_NAME")
           echo "url=$RELEASE_URL" >> $GITHUB_OUTPUT
 
       - name: Open pull request
