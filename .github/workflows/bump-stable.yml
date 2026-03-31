@@ -40,6 +40,20 @@ jobs:
           git commit -m "Bump stable to $TAG_NAME"
           git push -u origin $BRANCH
 
+      - name: Create draft release
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+        run: |
+          RELEASE_URL=$(gh release create "$TAG_NAME" \
+            --repo cachewerk/ext-relay \
+            --title "$TAG_NAME" \
+            --target main \
+            --draft \
+            --notes "https://github.com/cachewerk/relay/releases/tag/$TAG_NAME")
+          echo "url=$RELEASE_URL" >> $GITHUB_OUTPUT
+
       - name: Open pull request
         uses: octokit/request-action@v2.x
         env:
@@ -49,4 +63,4 @@ jobs:
           base: main
           head: pr/stable-${{ github.event.client_payload.tag }}
           title: Relay ${{ github.event.client_payload.tag }}
-          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}
+          body: "⚠️ **Merge this PR, then publish the draft release: **\n\n${{ steps.create_release.outputs.url }}"
