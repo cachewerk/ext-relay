@@ -5,6 +5,10 @@ on:
     types:
       - bump-relay-stable
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
 
   bump-relay-stable:
