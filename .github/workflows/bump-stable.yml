@@ -55,12 +55,15 @@ jobs:
           echo "url=$RELEASE_URL" >> $GITHUB_OUTPUT
 
       - name: Open pull request
-        uses: octokit/request-action@v3.x
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          route: POST /repos/cachewerk/ext-relay/pulls
-          base: main
-          head: pr/stable-${{ github.event.client_payload.tag }}
-          title: Relay ${{ github.event.client_payload.tag }}
-          body: "⚠️ Merge this PR, then publish the draft release: \n\n${{ steps.create_release.outputs.url }}"
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+          RELEASE_URL: ${{ steps.create_release.outputs.url }}
+        run: |
+          BODY=$(printf '⚠️ Merge this PR, then publish the draft release:\n\n%s' "$RELEASE_URL")
+          gh pr create \
+            --repo cachewerk/ext-relay \
+            --base main \
+            --head "pr/stable-$TAG_NAME" \
+            --title "Relay $TAG_NAME" \
+            --body "$BODY"
