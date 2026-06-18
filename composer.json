@@ -6,9 +6,11 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
-        "ext-session": "*",
-        "ext-msgpack": "*",
-        "ext-igbinary": "*"
+        "ext-session": "*"
+    },
+    "suggest": {
+        "ext-igbinary": "To use the igbinary serializer (Relay\\Relay::SERIALIZER_IGBINARY)",
+        "ext-msgpack": "To use the msgpack serializer (Relay\\Relay::SERIALIZER_MSGPACK)"
     },
     "php-ext": {
         "extension-name": "relay",
