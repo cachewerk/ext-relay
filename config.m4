@@ -28,7 +28,7 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
   AC_REQUIRE([AC_PROG_SED])dnl
   AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 
-  PLATFORM=$(echo $host_cpu | $SED 's/aarch64/arm64/;s/x86_64/x86-64/')
+  PLATFORM=$(echo $host_cpu | $SED 's/x86_64/x86-64/')
 
   case "$host_os" in
     linux*)
@@ -71,6 +71,7 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
       ;;
     darwin*)
       OS="darwin"
+      PLATFORM=$(echo $PLATFORM | $SED 's/aarch64/arm64/')
       ;;
     *)
       AC_MSG_ERROR([unsupported OS])
