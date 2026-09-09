@@ -79,7 +79,7 @@ AC_DEFUN([RELAY_SET_DOWNLOAD_URL], [
   esac
 
   VERSION=$($PHP_CONFIG --version | cut -d . -f -2)
-  RELAY_DOWNLOAD_URL="https://builds.r2.relay.so/v$1/relay-v$1-php$VERSION-$OS-$PLATFORM.tar.gz"
+  RELAY_DOWNLOAD_URL="https://builds.r2.relay.so/$1/relay-$1-php$VERSION-$OS-$PLATFORM.tar.gz"
   PHP_SUBST([RELAY_DOWNLOAD_URL])
 ])dnl
 
@@ -103,7 +103,7 @@ PHP_SUBST([PHP_THREAD_SAFETY])
 PHP_SUBST([PHP_CONFIG])
 
 PHP_NEW_EXTENSION([relay])
-RELAY_SET_DOWNLOAD_URL([0.50.0])
+RELAY_SET_DOWNLOAD_URL([dev])
 RELAY_CHECK_PROGS([curl, shasum, tar, uuidgen])
 PHP_MODULES="$PHP_MODULES \$(PHP_PECL_EXTENSION)"
 PHP_ADD_MAKEFILE_FRAGMENT([Makefile.frag])
