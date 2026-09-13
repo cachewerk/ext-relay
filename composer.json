@@ -16,6 +16,7 @@
         "extension-name": "relay",
         "priority": 70,
         "support-zts": true,
-        "os-families-exclude": ["windows"]
+        "os-families-exclude": ["windows"],
+        "download-url-method": ["pre-packaged-binary", "composer-default"]
     }
 }
