@@ -64,7 +64,7 @@ jobs:
           TAG_NAME: ${{ github.event.client_payload.tag }}
           RELEASE_URL: ${{ steps.create_release.outputs.url }}
         run: |
-          BODY=$(printf '⚠️ Merge this PR, then publish the draft release:\n\n%s' "$RELEASE_URL")
+          BODY=$(printf '# ⚠️ MERGE PR, THEN PUBLISH RELEASE ⚠️\n\n%s' "$RELEASE_URL")
           gh pr create \
             --repo cachewerk/ext-relay \
             --base main \
